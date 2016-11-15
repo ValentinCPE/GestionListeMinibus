@@ -27,9 +27,10 @@ public class OracleDataSourceDAO extends OracleDataSource{
         try{
             Properties props = new Properties();
             fichier = new FileInputStream(
-                ".//src//listminibus//dao//oracle//connexion.properties");
+                ".\\src\\listminibus\\dao\\oracle\\connexion.properties");
             props.load(fichier);
             ods = new OracleDataSourceDAO();
+            ods.setDriverType(props.getProperty("pilote"));
             ods.setPortNumber(new Integer(props.getProperty("port")));
             ods.setServiceName(props.getProperty("service"));
             ods.setUser(props.getProperty("user"));

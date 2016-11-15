@@ -23,16 +23,18 @@ public class Application extends javax.swing.JFrame {
     private static DataSource dataSourceDAO;
     private static Connection connexionBD;
     private List<Minibus> listminibus;
+    private int minibusCourant = 0;
     /**
      * Creates new form minibus
      */
     public Application() {
         initComponents();
-        jTextNumMinibus.setEnabled(false);
-        jTextCapacite.setEnabled(false);
+        jTextNumMinibus.setFocusable(false);
+        jTextCapacite.setFocusable(false);
         listminibus = minibusDAO.getLesMinibus();
-        jTextNumMinibus.setText(String.valueOf(listminibus.get(0).getNoMinibus()));
-        jTextCapacite.setText(String.valueOf(listminibus.get(0).getCapacite()));
+        jTextNumMinibus.setText(String.valueOf(listminibus.get(minibusCourant).getNoMinibus()));
+        jTextCapacite.setText(String.valueOf(listminibus.get(minibusCourant).getCapacite()));
+        jButtonGauche.setEnabled(false);
     }
 
     /**
@@ -44,6 +46,13 @@ public class Application extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDialog1 = new javax.swing.JDialog();
+        jLabel1 = new javax.swing.JLabel();
+        jTextajoutnum = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jTextAjoutCapa = new javax.swing.JTextField();
+        jButtonValider = new javax.swing.JButton();
+        jButtonAnnuler = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabelListMinibus = new javax.swing.JLabel();
         jLabelNumMinibus = new javax.swing.JLabel();
@@ -52,6 +61,63 @@ public class Application extends javax.swing.JFrame {
         jTextCapacite = new javax.swing.JTextField();
         jButtonGauche = new javax.swing.JButton();
         jButtonDroite = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+
+        jDialog1.setSize(new java.awt.Dimension(375, 170));
+
+        jLabel1.setText("Numero de minibus à ajouter :");
+
+        jTextajoutnum.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextajoutnumActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Capacité :");
+
+        jButtonValider.setText("Valider");
+
+        jButtonAnnuler.setText("Annuler");
+
+        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(56, 56, 56)
+                .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextajoutnum)
+                    .addComponent(jTextAjoutCapa, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jDialog1Layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addComponent(jButtonValider)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
+                .addComponent(jButtonAnnuler)
+                .addGap(75, 75, 75))
+        );
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextajoutnum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jTextAjoutCapa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonValider)
+                    .addComponent(jButtonAnnuler))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,30 +141,49 @@ public class Application extends javax.swing.JFrame {
         });
 
         jButtonDroite.setText(">>");
+        jButtonDroite.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDroiteActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Ajouter");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Supprimer");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelNumMinibus)
-                    .addComponent(jLabelCapacite))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextNumMinibus)
-                    .addComponent(jTextCapacite, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE))
-                .addGap(99, 99, 99))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(123, 123, 123)
-                .addComponent(jButtonGauche)
-                .addGap(86, 86, 86)
-                .addComponent(jButtonDroite)
-                .addContainerGap(130, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(147, Short.MAX_VALUE)
                 .addComponent(jLabelListMinibus, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(150, 150, 150))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelNumMinibus)
+                    .addComponent(jLabelCapacite)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
+                        .addComponent(jButtonGauche)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jButtonDroite)
+                        .addGap(38, 38, 38)
+                        .addComponent(jButton2))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jTextNumMinibus)
+                        .addComponent(jTextCapacite, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -113,10 +198,12 @@ public class Application extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelCapacite)
                     .addComponent(jTextCapacite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonGauche)
-                    .addComponent(jButtonDroite))
+                    .addComponent(jButtonDroite)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addContainerGap())
         );
 
@@ -134,7 +221,7 @@ public class Application extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         pack();
@@ -142,11 +229,42 @@ public class Application extends javax.swing.JFrame {
 
     private void jButtonGaucheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGaucheActionPerformed
         // TODO add your handling code here:
+        if(minibusCourant>0){
+            minibusCourant--;
+            jTextNumMinibus.setText(String.valueOf(listminibus.get(minibusCourant).getNoMinibus()));
+            jTextCapacite.setText(String.valueOf(listminibus.get(minibusCourant).getCapacite()));
+            jButtonDroite.setEnabled(true);
+        }
+        if(minibusCourant==0){
+            jButtonGauche.setEnabled(false);
+        }
     }//GEN-LAST:event_jButtonGaucheActionPerformed
 
     private void jTextNumMinibusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNumMinibusActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextNumMinibusActionPerformed
+
+    private void jButtonDroiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDroiteActionPerformed
+        // TODO add your handling code here:
+        if(minibusCourant<listminibus.size()-1){
+            minibusCourant++;
+            jTextNumMinibus.setText(String.valueOf(listminibus.get(minibusCourant).getNoMinibus()));
+            jTextCapacite.setText(String.valueOf(listminibus.get(minibusCourant).getCapacite()));
+            jButtonGauche.setEnabled(true);
+        }
+        if(minibusCourant==listminibus.size()-1){
+            jButtonDroite.setEnabled(false);
+        }
+    }//GEN-LAST:event_jButtonDroiteActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        jDialog1.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextajoutnumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextajoutnumActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextajoutnumActionPerformed
 
     /**
      * @param args the command line arguments
@@ -196,13 +314,22 @@ public class Application extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButtonAnnuler;
     private javax.swing.JButton jButtonDroite;
     private javax.swing.JButton jButtonGauche;
+    private javax.swing.JButton jButtonValider;
+    private javax.swing.JDialog jDialog1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelCapacite;
     private javax.swing.JLabel jLabelListMinibus;
     private javax.swing.JLabel jLabelNumMinibus;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField jTextAjoutCapa;
     private javax.swing.JTextField jTextCapacite;
     private javax.swing.JTextField jTextNumMinibus;
+    private javax.swing.JTextField jTextajoutnum;
     // End of variables declaration//GEN-END:variables
 }

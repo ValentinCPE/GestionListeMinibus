@@ -6,11 +6,14 @@
 package listminibus.dao.oracle;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.sql.DataSource;
 import listminibus.dao.IMinibusDAO;
 import listminibus.modele.Minibus;
@@ -60,6 +63,30 @@ public class OracleMinibusDAO implements IMinibusDAO{
             }
         }
         return listeMinibus;
+    }
+
+    @Override
+    public void creerMinibus(int num, int cap) {
+        PreparedStatement pstm = null;
+        try{
+            pstm = connexionBD.prepareStatement("INSERT INTO MINIBUS VALUES(?,?)");
+            pstm.setInt(1, num);
+            pstm.setInt(2, cap);
+            pstm.executeUpdate();
+        }catch(SQLException ex){
+            System.err.println(ex.getMessage());
+        }finally{
+            try {
+                pstm.close();
+            } catch (SQLException ex) {
+                System.err.println(ex.getMessage());
+            }
+        }
+    }
+
+    @Override
+    public void supprimerMinibus(int num) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

@@ -18,4 +18,6 @@ public interface IMinibusDAO {
     public abstract void setDataSource(DataSource ds);
     public abstract void setConnection(Connection c);
     public abstract List<Minibus> getLesMinibus();
+    public abstract void creerMinibus(int num,int cap);
+    public abstract void supprimerMinibus(int num);
 }
