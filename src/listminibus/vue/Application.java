@@ -67,6 +67,9 @@ public class Application extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        jDetail = new javax.swing.JCheckBox();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         jPanel1 = new javax.swing.JPanel();
         jLabelListMinibus = new javax.swing.JLabel();
         jLabelNumMinibus = new javax.swing.JLabel();
@@ -146,9 +149,9 @@ public class Application extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jDialog2.setSize(new java.awt.Dimension(440, 200));
+        jDialog2.setSize(new java.awt.Dimension(420, 225));
 
-        jLabel3.setText("Impossible d'ajouter ce minibus car il existe déjà dans la base");
+        jLabel3.setText("Des erreurs ont été rencontrées");
 
         jButton1.setText("OK");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -159,36 +162,59 @@ public class Application extends javax.swing.JFrame {
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/listminibus/erreur.png"))); // NOI18N
 
+        jDetail.setText("Détails de l'erreur");
+        jDetail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jDetailActionPerformed(evt);
+            }
+        });
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
         javax.swing.GroupLayout jDialog2Layout = new javax.swing.GroupLayout(jDialog2.getContentPane());
         jDialog2.getContentPane().setLayout(jDialog2Layout);
         jDialog2Layout.setHorizontalGroup(
             jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDialog2Layout.createSequentialGroup()
                 .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jDialog2Layout.createSequentialGroup()
+                            .addGap(153, 153, 153)
+                            .addComponent(jLabel4)
+                            .addGap(89, 89, 89)))
                     .addGroup(jDialog2Layout.createSequentialGroup()
-                        .addGap(160, 160, 160)
-                        .addComponent(jLabel4))
+                        .addGap(123, 123, 123)
+                        .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jDialog2Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jDetail))
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jDialog2Layout.createSequentialGroup()
-                        .addGap(131, 131, 131)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jDialog2Layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(43, Short.MAX_VALUE))
+                        .addGap(77, 77, 77)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
         jDialog2Layout.setVerticalGroup(
             jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDialog2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel4)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addGap(12, 12, 12)
+                .addComponent(jDetail)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("liste des minibus");
 
         jLabelListMinibus.setText("LISTE DES MINIBUS");
 
@@ -390,13 +416,18 @@ public class Application extends javax.swing.JFrame {
         // TODO add your handling code here:
         jButtonDroite.setEnabled(true);
         jButtonGauche.setEnabled(false);
+        try{
         int numeroMinibus = Integer.valueOf(jTextajoutnum.getText());
         int capacite = Integer.valueOf(jTextAjoutCapa.getText());
-        try{
         minibusDAO.creerMinibus(numeroMinibus, capacite);
         }catch(SQLException ex){
             jDialog2.setVisible(true);
             jDialog1.setVisible(false);
+            jTextArea1.setText("Ce numéro de minibus existe déjà");
+        }catch(NumberFormatException e){
+            jDialog2.setVisible(true);
+            jDialog1.setVisible(false);
+            jTextArea1.setText("Un ou plusieurs champs n'ont pas été remplies");
         }
         minibusCourant = 0;
         listminibus = minibusDAO.getLesMinibus();
@@ -461,7 +492,22 @@ public class Application extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         jDialog2.setVisible(false);
+        jDetail.setSelected(false);
+        jTextArea1.setVisible(false);
+        jDialog2.setSize(420, 225);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDetailActionPerformed
+        // TODO add your handling code here:
+        jTextArea1.setFocusable(false);
+        if(jDetail.isSelected()){
+        jTextArea1.setVisible(true);
+        jDialog2.setSize(420, 300);
+        }else{
+          jTextArea1.setVisible(false);
+          jDialog2.setSize(420, 225);  
+        }
+    }//GEN-LAST:event_jDetailActionPerformed
 
     /**
      * @param args the command line arguments
@@ -520,6 +566,7 @@ public class Application extends javax.swing.JFrame {
     private javax.swing.JButton jButtonOui;
     private javax.swing.JButton jButtonSupprimer;
     private javax.swing.JButton jButtonValider;
+    private javax.swing.JCheckBox jDetail;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JLabel jLabel1;
@@ -531,7 +578,9 @@ public class Application extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelListMinibus;
     private javax.swing.JLabel jLabelNumMinibus;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextAjoutCapa;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextCapacite;
     private javax.swing.JTextField jTextNumMinibus;
     private javax.swing.JTextField jTextajoutnum;
