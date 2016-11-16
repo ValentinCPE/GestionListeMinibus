@@ -12,12 +12,10 @@ package listminibus.modele;
 public class Minibus {
     private int nominibus;
     private int capacite;
-    private int minibusCourant;
     
     public Minibus(int num,int cap){
         this.nominibus = num;
         this.capacite = cap;
-        this.minibusCourant = 0;
     }
     
     public int getNoMinibus(){
@@ -34,17 +32,5 @@ public class Minibus {
     
     public void setCapacite(int cap){
         this.capacite = cap;
-    }
-    
-    public void minibusSuivant(){
-        this.minibusCourant++;
-    }
-    
-    public void minibusPrecedent(){
-        this.minibusCourant--;
-    }
-    
-    public int minibusCourant(){
-        return this.minibusCourant;
     }
 }

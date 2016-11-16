@@ -86,7 +86,14 @@ public class OracleMinibusDAO implements IMinibusDAO{
 
     @Override
     public void supprimerMinibus(int num) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PreparedStatement pstm = null;
+        try{
+            pstm = connexionBD.prepareStatement("DELETE FROM MINIBUS WHERE NOMINIBUS=?");
+            pstm.setInt(1, num);
+            pstm.executeUpdate();
+        }catch(SQLException ex){
+            System.err.println(ex.getMessage());
+        }
     }
     
     
