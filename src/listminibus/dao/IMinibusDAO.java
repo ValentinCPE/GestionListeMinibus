@@ -6,6 +6,7 @@
 package listminibus.dao;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 import javax.sql.DataSource;
 import listminibus.modele.Minibus;
@@ -18,6 +19,6 @@ public interface IMinibusDAO {
     public abstract void setDataSource(DataSource ds);
     public abstract void setConnection(Connection c);
     public abstract List<Minibus> getLesMinibus();
-    public abstract void creerMinibus(int num,int cap);
+    public abstract void creerMinibus(int num,int cap) throws SQLException;
     public abstract void supprimerMinibus(int num);
 }

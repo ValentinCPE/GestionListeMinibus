@@ -66,23 +66,14 @@ public class OracleMinibusDAO implements IMinibusDAO{
     }
 
     @Override
-    public void creerMinibus(int num, int cap) {
+    public void creerMinibus(int num, int cap) throws SQLException{
         PreparedStatement pstm = null;
-        try{
             pstm = connexionBD.prepareStatement("INSERT INTO MINIBUS VALUES(?,?)");
             pstm.setInt(1, num);
             pstm.setInt(2, cap);
             pstm.executeUpdate();
-        }catch(SQLException ex){
-            System.err.println(ex.getMessage());
-        }finally{
-            try {
-                pstm.close();
-            } catch (SQLException ex) {
-                System.err.println(ex.getMessage());
-            }
-        }
-    }
+            pstm.close();
+           }
 
     @Override
     public void supprimerMinibus(int num) {

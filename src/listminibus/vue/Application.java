@@ -63,6 +63,10 @@ public class Application extends javax.swing.JFrame {
         jTextAjoutCapa = new javax.swing.JTextField();
         jButtonValider = new javax.swing.JButton();
         jButtonAnnuler = new javax.swing.JButton();
+        jDialog2 = new javax.swing.JDialog();
+        jLabel3 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabelListMinibus = new javax.swing.JLabel();
         jLabelNumMinibus = new javax.swing.JLabel();
@@ -140,6 +144,48 @@ public class Application extends javax.swing.JFrame {
                     .addComponent(jButtonValider)
                     .addComponent(jButtonAnnuler))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jDialog2.setSize(new java.awt.Dimension(440, 200));
+
+        jLabel3.setText("Impossible d'ajouter ce minibus car il existe déjà dans la base");
+
+        jButton1.setText("OK");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/listminibus/erreur.png"))); // NOI18N
+
+        javax.swing.GroupLayout jDialog2Layout = new javax.swing.GroupLayout(jDialog2.getContentPane());
+        jDialog2.getContentPane().setLayout(jDialog2Layout);
+        jDialog2Layout.setHorizontalGroup(
+            jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog2Layout.createSequentialGroup()
+                .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jDialog2Layout.createSequentialGroup()
+                        .addGap(160, 160, 160)
+                        .addComponent(jLabel4))
+                    .addGroup(jDialog2Layout.createSequentialGroup()
+                        .addGap(131, 131, 131)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jDialog2Layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(43, Short.MAX_VALUE))
+        );
+        jDialog2Layout.setVerticalGroup(
+            jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1)
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -346,7 +392,12 @@ public class Application extends javax.swing.JFrame {
         jButtonGauche.setEnabled(false);
         int numeroMinibus = Integer.valueOf(jTextajoutnum.getText());
         int capacite = Integer.valueOf(jTextAjoutCapa.getText());
+        try{
         minibusDAO.creerMinibus(numeroMinibus, capacite);
+        }catch(SQLException ex){
+            jDialog2.setVisible(true);
+            jDialog1.setVisible(false);
+        }
         minibusCourant = 0;
         listminibus = minibusDAO.getLesMinibus();
         jTextNumMinibus.setText(String.valueOf(listminibus.get(minibusCourant).getNoMinibus()));
@@ -407,6 +458,11 @@ public class Application extends javax.swing.JFrame {
         jLabelConfirm.setVisible(false);
     }//GEN-LAST:event_jButtonOuiActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        jDialog2.setVisible(false);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -455,6 +511,7 @@ public class Application extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonAjouter;
     private javax.swing.JButton jButtonAnnuler;
     private javax.swing.JButton jButtonDroite;
@@ -464,8 +521,11 @@ public class Application extends javax.swing.JFrame {
     private javax.swing.JButton jButtonSupprimer;
     private javax.swing.JButton jButtonValider;
     private javax.swing.JDialog jDialog1;
+    private javax.swing.JDialog jDialog2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabelCapacite;
     private javax.swing.JLabel jLabelConfirm;
     private javax.swing.JLabel jLabelListMinibus;
